@@ -1,0 +1,20 @@
+# 敘事層：每段落發生什麼。只寫劇情與情緒，不寫景別、構圖、顏色等畫面細節（那些寫在 shots.yaml）。
+# 角色、場景、物件一律用 @id（定義在 glossary.yaml）。
+
+logline: >
+  TODO 一句話概念：誰、想要什麼、阻礙是什麼。
+theme: TODO 主題
+tone: TODO 整體氣氛
+ending: TODO 結局類型（例如勝利、留伏筆）
+status: proposed
+
+beats:                         # 每個 timeline 段落一筆；bars 必須等於 timeline 該段的 [bar_start, bar_end]
+  - id: intro
+    section: intro             # 必須是 timeline.sections[].label
+    bars: [0, 4]
+    places: ["@room"]
+    story: >
+      TODO 這一段發生什麼事：只寫劇情動作，用 @hero 與 @room 這樣的寫法稱呼角色與場景。
+    emotion: TODO 情緒走向
+    lyric_link: TODO 這段歌詞與劇情的對應
+    status: proposed

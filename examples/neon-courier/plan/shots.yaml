@@ -1,0 +1,632 @@
+# 鏡頭層：每一鏡的時間、主體、首幀、運動、末幀、轉場、拍點事件、後製。
+# 欄位說明見 skills/mv-script/references/schema.md；詞彙值見 glossary.yaml 的 vocab。
+# span.from / span.to 是 [小節, 拍]；to 不含在本鏡內。
+# motion.*.realize：model＝由影片模型生成；post＝後製合成；model+post＝兩者都有；none＝不動。
+#
+# 這份範例共 14 鏡，涵蓋全曲 66 秒，用來示範：
+#   route A／B／C 各至少一鏡、variation small／medium／large、facing 依階段寫成 dict、
+#   beat_events（含人聲落點 sync）、八種 transition_in 裡的七種、特寫寫聚焦部位、
+#   靜止角色在首幀寫表情嘴眼、read_as、model_hint、status 同時有 proposed 與 confirmed、questions。
+
+shots:
+  # ───────────── intro（bar 0–4）─────────────
+  - id: s001
+    section: intro
+    story_beat: intro
+    span: {from: [0, 0], to: [1, 1]}
+    place: "@alley"
+    shot_size: LS
+    angle: eye
+    route: C                             # 靜態圖加視差：只 1 小節、非特寫、主體動作只用後製
+    variation: small
+    subjects:
+      - ref: "@kai"
+        placement: {x: center_right, y: lower, depth: mg}
+        size: 在右側屋簷下，距鏡頭約 12 m；全身高約畫面高的 22%，頭頂在畫面高約 56%（百分比從上緣量起）
+        facing: away
+        state: 背對鏡頭站著，雙手在身前拿著 @letter，頭微低
+      - ref: "@letter"
+        placement: {x: center_right, y: lower, depth: mg}
+        size: 在 @kai 身前，被身體擋住大半，只露出下緣的米白色邊緣
+    first_frame: >
+      雨夜的 @alley，鏡頭在巷口、離地約 1.6 m，平視巷子深處。
+      兩側磚牆上有粉紅與青色的霓虹色塊（只是發光的矩形色塊，沒有文字）；左側的粉紅色塊亮度約為青色色塊的一半。
+      濕的柏油路面反射這些色光。@kai 背對鏡頭站在右側屋簷下，雙手在身前拿著 @letter；巷子往畫面中央深處延伸，盡頭是暗的。
+    motion:
+      camera: {move: push_in, speed: slow, realize: post, note: 後製對靜態圖做約 5% 的放大，前景與背景用不同速度形成視差}
+      subject:
+        text: "@kai 只有呼吸造成的肩膀起伏；雨絲在整個畫面中持續落下。"
+        realize: post
+    last_frame: null
+    beat_events:
+      - at: [0, 4]
+        sync: 第一個鼓點（1.50 s）
+        event: 左側牆面的粉紅霓虹色塊做 glow_pulse：亮度 1 幀內抬升到約 1.5 倍，再用 3 幀回落
+    transition_in: {type: fade_from_black, frames: 12}
+    post:
+      - {effect: glow_pulse, at: [0, 4], frames: 4}
+    overlay: null
+    status: confirmed
+    model_hint: route C：靜態圖加後製視差，不需要影片模型
+
+  - id: s002
+    section: intro
+    story_beat: intro
+    span: {from: [1, 1], to: [3, 1]}
+    lyrics: [1]
+    place: "@alley"
+    shot_size: MCU
+    angle: eye
+    route: A
+    variation: small
+    subjects:
+      - ref: "@kai"
+        placement: {x: center, y: middle, depth: mg}
+        size: 胸口以上，頭頂在畫面高約 12%（從上緣量起），臉的中心在畫面水平正中，頭寬約畫面寬 28%
+        facing: three_quarter_left
+        state: 站著不動，低頭看手裡的 @letter；表情平靜，嘴唇輕閉，眼睛睜開看向 @letter
+      - ref: "@letter"
+        placement: {x: center, y: lower, depth: fg}
+        size: 長邊水平，約畫面寬 30%，中心在畫面高約 78%；被雙手拿在 @kai 胸前
+    first_frame: >
+      @alley 的屋簷下，@kai 胸口以上位於畫面中央，臉朝畫面左前方；低著頭，眼睛睜開看向胸前的 @letter，表情平靜，嘴唇輕閉。
+      濕的黑髮貼在額頭，橘色外套的肩上有雨滴；char_left 袖口的黃色反光條在畫面右側。
+      @letter 被雙手拿在胸前，空白的米白色正面朝向鏡頭，紅色封口條在右端。背景是失焦的粉紅與青色光點。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: "@kai 保持不動，只有呼吸造成的胸口起伏；雨滴從屋簷邊緣持續落下。"
+        realize: model
+    last_frame: null
+    beat_events:
+      - at: [2, 3]
+        sync: 人聲「亮」約 5.02 s（人聲分軌加 onset 量測）
+        event: 背景失焦的霓虹光點亮度同步升高到約 1.3 倍，維持到本鏡結束
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: confirmed
+    model_hint: 角色鏡頭，I2V 只用首幀；表情與嘴眼狀態已鎖在首幀，不需要末幀
+
+  - id: s003
+    section: intro
+    story_beat: intro
+    span: {from: [3, 1], to: [5, 1]}
+    place: "@alley"
+    shot_size: MS
+    angle: eye
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@kai"
+        placement: {x: center_left, y: middle, depth: mg}
+        size: 腰以上，頭頂在畫面高約 15%，身體中心在從左緣起算畫面寬約 33% 處
+        facing: three_quarter_right
+        state: 站著不動；表情平靜，嘴唇輕閉，眼睛睜開看向畫面右側
+      - ref: "@letter"
+        placement: {x: center_left, y: lower, depth: fg}
+        size: 長邊水平，約畫面寬 14%，中心在從左緣起算畫面寬約 35%、畫面高約 62%；被雙手拿在身前
+      - ref: "@boxbot"
+        placement: {x: center_right, y: lower, depth: mg}
+        size: 方箱高約 @kai 膝蓋（約 @kai 身高的 1/4）；停穩後方箱右緣在從左緣起算畫面寬約 78% 處，在 @kai 右前方約 0.6 m
+        facing: {entering: profile_left, settled: to_camera}
+        state: "[3,3] 從畫面右緣外滑入，行進時箱體側面朝鏡頭、朝畫面左前進；[4,2] 減速並在原地轉向，[4,4] 停穩時前面板正面朝鏡頭"
+    first_frame: >
+      @alley 的屋簷外，@kai 腰以上位於畫面左半，身體朝畫面右前方，眼睛睜開看向畫面右側，表情平靜，嘴唇輕閉；
+      雙手在身前拿著 @letter。畫面右半是濕的柏油路面與失焦的霓虹光點，沒有其他東西。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: >
+          @boxbot 在 [3,3] 從畫面右緣外滑入，朝畫面左行進，行進時箱體側面朝鏡頭；[4,2] 減速，並在原地轉向，
+          [4,4] 停穩時前面板正面朝鏡頭，停在 @kai 的右前方。
+          @kai 保持站立，只有呼吸；視線在 [4,2] 轉向 @boxbot。
+        realize: model
+    last_frame: >
+      @kai 仍站在畫面左半，姿勢不變；視線已轉向 @boxbot，表情平靜，嘴唇輕閉，眼睛睜開看向畫面右下。
+      @boxbot 停在 @kai 右前方的地面上，方箱右緣在從左緣起算畫面寬約 78% 處，前面板正面朝向鏡頭，琥珀色指示燈穩定亮著。
+    beat_events:
+      - at: [3, 3]
+        event: "@boxbot 的右緣進入畫面右緣"
+      - at: [4, 2]
+        event: "@boxbot 減速，開始原地轉向；@kai 的視線轉向 @boxbot"
+      - at: [4, 4]
+        event: "@boxbot 停穩，前面板正面朝鏡頭，指示燈亮著"
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    model_hint: 物體入鏡、精準停位，用首尾幀模型；停位與朝向已分別寫在首幀與末幀
+
+  # ───────────── verse（bar 5–12）─────────────
+  - id: s004
+    section: verse
+    story_beat: verse
+    span: {from: [5, 1], to: [7, 1]}
+    lyrics: [2]
+    place: "@alley"
+    shot_size: MS
+    angle: eye
+    route: B                             # 指定動作：行走循環用姿勢序列控制
+    variation: medium
+    subjects:
+      - ref: "@kai"
+        placement: {x: center_left, y: middle, depth: mg}
+        size: 腰以上，頭頂在畫面高約 15%；鏡頭與他同速平移，所以他在畫面中的位置固定在從左緣起算畫面寬約 40%
+        facing: profile_left
+        state: 往畫面左行走，雙手在身前拿著 @letter，視線朝前方
+      - ref: "@letter"
+        placement: {x: center_left, y: middle, depth: mg}
+        size: 長邊朝畫面左，約畫面寬 12%，在 @kai 身前、畫面高約 52%；從側面看只有薄薄的邊緣
+      - ref: "@boxbot"
+        placement: {x: center, y: lower, depth: mg}
+        size: 方箱高約畫面高 12%，在 @kai 右後方半個身位（畫面中偏右）
+        facing: profile_left
+        state: 跟在 @kai 後方往畫面左滾動，前面板朝畫面左
+    first_frame: >
+      @alley 的中段，鏡頭在 @kai 側面約 3 m、與胸口同高。@kai 腰以上，側面朝畫面左，雙手在身前拿著 @letter；
+      表情專注，嘴唇輕閉，眼睛看向前方；char_right 肩的郵差包可見。
+      @boxbot 在 @kai 右後方半個身位的地面上，前面板朝畫面左。背景是左側牆面失焦的粉紅霓虹色塊。
+    motion:
+      camera: {move: track, speed: medium, realize: model, note: 鏡頭與 @kai 以相同速度往畫面左平移}
+      subject:
+        text: "@kai 與 @boxbot 沿 @alley 往畫面左行走，步伐穩定；背景的牆面與霓虹色塊隨鏡頭平移，往畫面右捲動。"
+        realize: model
+    last_frame: >
+      與首幀相同的取景與構圖：@kai 與 @boxbot 的相對位置不變，@boxbot 仍在 @kai 右後方半個身位。
+      背景換成巷子更深處的牆面，一塊青色霓虹色塊出現在 @kai 身後。
+    beat_events:
+      - at: [6, 1]
+        sync: 歌詞 2 唱到「信」之後的第一個重拍
+        event: "@boxbot 的指示燈做 glow_pulse：亮度 1 幀內抬升到約 1.5 倍，再用 3 幀回落"
+    transition_in: {type: dissolve, beats: 1}
+    post:
+      - {effect: glow_pulse, at: [6, 1], frames: 4}
+    overlay: null
+    status: proposed
+    model_hint: route B：用走路循環的姿勢序列控制雙腿；鏡頭平移由模型生成，必要時後製穩定
+
+  - id: s005
+    section: verse
+    story_beat: verse
+    span: {from: [7, 1], to: [9, 1]}
+    place: "@alley"
+    shot_size: INSERT
+    angle: high
+    route: A
+    variation: small
+    subjects:
+      - ref: "@letter"
+        placement: {x: center, y: middle, depth: fg}
+        size: 長邊水平，約畫面寬 60%，中心在畫面正中；空白的正面朝上
+      - ref: "@kai"
+        placement: {x: center, y: lower, depth: mg}
+        size: 只拍到雙手與手腕；雙手的指尖各捏住 @letter 的一端，袖口的橘色布料在畫面左下與右下角
+        facing: to_camera
+        state: 雙手捏住 @letter 不動
+    first_frame: >
+      從上方約 60 度俯看 @kai 的雙手：兩手的指尖各捏住 @letter 的一端，@letter 空白的米白色正面朝上，占畫面寬約 60%，紅色封口條在右端。
+      @letter 表面有約 6 個深色小水點。char_left 手腕（畫面右側）的袖口有黃色反光條。
+      背景是濕的柏油路面，反射失焦的粉紅與青色光點。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: "雨滴持續落在 @letter 上；@kai 的雙手保持不動，只有指尖因為呼吸而微微顫動。"
+        realize: model
+    last_frame: null
+    beat_events:
+      - at: [8, 1]
+        sync: 間奏第 2 小節的第 1 拍
+        event: "一滴較大的雨滴落在 @letter 正中，留下直徑約為 @letter 寬 1/10 的深色水點"
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    model_hint: 雨滴是小面積動態，I2V 只用首幀
+
+  - id: s006
+    section: verse
+    story_beat: verse
+    span: {from: [9, 1], to: [13, 1]}
+    lyrics: [3]
+    place: "@alley"
+    shot_size: MS
+    angle: eye
+    route: A
+    variation: large                     # 景別從 MS 變到 LS，必須有 last_frame；考慮拆成兩鏡
+    subjects:
+      - ref: "@kai"
+        placement: {x: center, y: middle, depth: mg}
+        size: 腰以上，頭頂在畫面高約 18%，身體中心在畫面水平正中
+        facing: away
+        state: 背對鏡頭往巷子深處行走，@letter 握在 char_right 手裡
+      - ref: "@boxbot"
+        placement: {x: center_right, y: lower, depth: mg}
+        size: 方箱高約畫面高 12%，在 @kai 右前方約 1 m
+        facing: away
+        state: 背面朝鏡頭，跟著 @kai 往前滾動
+    first_frame: >
+      @alley 的中段，鏡頭在 @kai 身後約 2.5 m、離地約 1.4 m，平視。@kai 腰以上背對鏡頭，頭頂在畫面高約 18%；
+      橘色外套的背面可見，郵差包的包帶斜過背後。@boxbot 在 @kai 右前方約 1 m，方箱背面朝鏡頭。
+      前方的巷子往深處延伸，兩側牆面的粉紅與青色霓虹色塊在遠處縮成小光點。
+    motion:
+      camera: {move: crane_up, speed: medium, realize: model}
+      subject:
+        text: "@kai 與 @boxbot 以穩定的步速往巷子深處行走；鏡頭升高並拉遠，到 [12,4] 變成從上方約 45 度俯看整條 @alley 的遠景。"
+        realize: model
+    last_frame: >
+      鏡頭在 @kai 身後約 8 m、離地約 6 m，從上方約 45 度俯看 @alley。@kai 在畫面中心偏下，全身高約畫面高 12%，仍背對鏡頭；
+      @boxbot 在 @kai 右前方。整條巷子與兩側的霓虹色塊都在畫面內，濕的柏油路面反射粉紅與青色光。
+    beat_events:
+      - at: [11, 1]
+        event: 鏡頭升到離地約 4 m（升高的一半）
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    model_hint: large：首尾幀模型負責鏡頭升高；若中間畫面溶接或變形，拆成 MS 與 LS 兩鏡
+
+  # ───────────── chorus（bar 13–20）─────────────
+  - id: s007
+    section: chorus
+    story_beat: chorus
+    span: {from: [13, 1], to: [15, 1]}
+    lyrics: [4]
+    place: "@alley"
+    shot_size: FS
+    angle: low
+    route: B
+    variation: medium
+    subjects:
+      - ref: "@kai"
+        placement: {x: center_left, y: middle, depth: mg}
+        size: 全身，高約畫面高 55%，頭頂在畫面高約 18%、腳底在約 73%（從上緣量起）；鏡頭與他同速平移
+        facing: profile_right
+        state: 往畫面右奔跑，右腳在前，雙手握拳擺在身側，@letter 握在 char_left 手裡
+      - ref: "@boxbot"
+        placement: {x: screen_left, y: lower, depth: mg}
+        size: 方箱高約 @kai 膝蓋；在 @kai 後方約 1 m，畫面左緣內
+        facing: profile_right
+        state: 在 @kai 後方往畫面右滾動，前面板朝畫面右
+      - ref: "@letter"
+        placement: {x: center_left, y: middle, depth: mg}
+        size: 長邊約 @kai 前臂長，握在 char_left 手裡，米白色，紅色封口條朝前
+    first_frame: >
+      @alley 中的低角度：鏡頭離地約 0.5 m，距 @kai 約 4 m。@kai 全身側面朝畫面右，右腳在前、腳尖離地，雙手握拳擺在身側；
+      char_left 手握著 @letter，char_left 袖口的黃色反光條可見。@boxbot 在 @kai 後方約 1 m、畫面左緣內。
+      地面有水窪，反射粉紅與青色霓虹光；兩側牆面的色塊都亮著。
+    motion:
+      camera: {move: track, speed: fast, realize: model}
+      subject:
+        text: "@kai 往畫面右奔跑，步伐大而快，雨水隨步伐濺起；@boxbot 在 @kai 後方約 1 m 跟著滾動，到 [14,1] 追到 @kai 身旁。"
+        realize: model
+    last_frame: >
+      與首幀相同的取景：@kai 全身側面朝畫面右，換成左腳在前；@boxbot 在 @kai 身旁（畫面左側、同一深度），前面板朝畫面右。
+      地面的水窪多了一圈剛濺起的水花。
+    beat_events:
+      - at: [13, 1]
+        sync: 副歌第 1 拍（鼓重拍）
+        event: "@kai 的右腳踩進水窪，水花往行進方向濺起，高約 @kai 小腿的長度"
+      - at: [14, 1]
+        sync: 副歌第 2 小節第 1 拍
+        event: "@boxbot 追到 @kai 身旁，兩者並排"
+    transition_in: {type: flash_white, frames: 2}
+    post: []
+    overlay: null
+    status: proposed
+    model_hint: 身體大動作，route B 用姿勢序列控制奔跑循環；水花由模型生成
+
+  - id: s008
+    section: chorus
+    story_beat: chorus
+    span: {from: [15, 1], to: [16, 1]}
+    place: "@alley"
+    shot_size: ELS
+    angle: high
+    route: C
+    variation: small
+    subjects:
+      - ref: "@kai"
+        placement: {x: center_right, y: lower, depth: mg}
+        size: 全身高約畫面高 10%，中心在從左緣起算畫面寬約 55% 處；是靜態圖上奔跑姿勢的小剪影
+        facing: profile_right
+        state: 奔跑姿勢，身體朝畫面右
+      - ref: "@boxbot"
+        placement: {x: center, y: lower, depth: mg}
+        size: 方箱高約畫面高 3%，在 @kai 左後方約畫面寬 4%
+        facing: profile_right
+        state: 貼地，前面板朝畫面右
+    first_frame: >
+      從 @alley 上方約 40 m 俯視整條巷子，遠處城區的屋頂在畫面上緣。巷子兩側牆面各有 8 塊霓虹色塊，約一半是粉紅、一半是青色，全部亮著。
+      @kai 與 @boxbot 是畫面中央偏下巷子裡的兩個小剪影，@kai 在前、@boxbot 在 @kai 左後方。
+    motion:
+      camera: {move: pan_right, speed: slow, realize: post}
+      subject:
+        text: "後製把 @kai 與 @boxbot 的靜態剪影整體往畫面右平移約畫面寬 8%；雨絲持續落下。"
+        realize: post
+    last_frame: null
+    beat_events:
+      - at: [15, 3]
+        sync: 副歌第 4 小節第 3 拍
+        event: 巷子最遠端的兩塊霓虹色塊熄滅（後製：亮度 2 幀內降到 0）
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    read_as: 遠處的霓虹一塊塊熄滅，表示時限逼近；不是停電或故障
+    model_hint: route C：靜態圖加後製平移與熄燈，不需要影片模型
+
+  - id: s009
+    section: chorus
+    story_beat: chorus
+    span: {from: [16, 1], to: [19, 1]}
+    lyrics: [5]
+    place: "@alley"
+    shot_size: MS
+    angle: eye
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@kai"
+        placement: {x: center, y: middle, depth: mg}
+        size: 腰以上，頭頂在畫面高約 14%，身體中心在畫面水平正中；鏡頭與他同速後退，大小不變
+        facing: to_camera
+        state: 朝鏡頭奔跑，表情專注，嘴巴微張喘氣，眼睛直視前方
+      - ref: "@boxbot"
+        placement: {x: center_left, y: lower, depth: mg}
+        size: 方箱高約畫面高 14%，在 @kai 的 char_right 側（畫面左側）並排，兩者間距約 0.5 m
+        facing: to_camera
+        state: 與 @kai 並排滾動，前面板朝鏡頭
+    first_frame: >
+      @alley 的正面：鏡頭在 @kai 前方約 3 m、與胸口同高。@kai 腰以上，正面朝鏡頭，表情專注，嘴巴微張，眼睛直視前方；橘色外套被雨淋濕。
+      @boxbot 在 @kai 的 char_right 側（畫面左側）並排。背景左側牆面的青色色塊與右側牆面的粉紅色塊都亮著，巷口有一盞暖黃路燈。
+    motion:
+      camera: {move: pull_out, speed: medium, realize: model, note: 鏡頭與 @kai 同速後退，@kai 在畫面中的大小不變}
+      subject:
+        text: "@kai 朝鏡頭奔跑；@boxbot 在 @kai 左側並排滾動；背景往鏡頭方向流過。"
+        realize: model
+    last_frame: >
+      與首幀相同的構圖：@kai 與 @boxbot 的大小與位置不變；背景左側的青色色塊與右側的粉紅色塊都已熄滅，
+      只剩巷口那盞暖黃路燈。
+    beat_events:
+      - at: [17, 1]
+        event: 背景左側牆面的青色霓虹色塊熄滅（後製）
+      - at: [18, 1]
+        event: 背景右側牆面的粉紅霓虹色塊熄滅（後製）
+    transition_in: {type: cut}
+    post: []
+    overlay: null
+    status: proposed
+    model_hint: 角色鏡頭，I2V 加首尾幀；熄燈由後製疊加
+
+  - id: s010
+    section: chorus
+    story_beat: chorus
+    span: {from: [19, 1], to: [21, 1]}
+    lyrics: []
+    place: "@footbridge"
+    shot_size: FS
+    angle: eye
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@kai"
+        placement: {x: center_left, y: middle, depth: mg}
+        size: 全身，高約畫面高 50%，腳底在畫面高約 78%；位於天橋入口的第一盞路燈左邊約畫面寬 10% 處
+        facing: profile_right
+        state: 往畫面右奔跑，剛踏上天橋的鋼板地面
+      - ref: "@boxbot"
+        placement: {x: screen_left, y: lower, depth: mg}
+        size: 方箱高約畫面高 12%，在 @kai 後方約 1 m
+        facing: profile_right
+        state: 在 @kai 後方往畫面右滾動
+    first_frame: >
+      @footbridge 的入口，鏡頭在天橋中段、離地約 1.5 m，朝入口方向平視。@kai 全身側面朝畫面右，左腳剛踩在鋼板上，雙手握拳；
+      @boxbot 在 @kai 後方約 1 m。天橋的欄杆在畫面下半，暖黃路燈在 @kai 右側。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: "@kai 往畫面右奔跑，雨水在鋼板上濺起；@boxbot 在 @kai 後方跟著滾動，保持約 1 m 的間距。"
+        realize: model
+    last_frame: >
+      @kai 已在畫面右半，全身高約畫面高 50%，位於第二盞路燈左邊；@boxbot 在 @kai 後方約 1 m，在畫面中央偏左。
+    beat_events:
+      - at: [20, 1]
+        event: "@kai 經過第一盞路燈（畫面寬約 30% 處）"
+      - at: [20, 3]
+        event: "@boxbot 經過同一盞路燈"
+    transition_in: {type: cut_on_action, note: "s009 的奔跑與本鏡的奔跑是同一個動作：@kai 的步伐在切點前後延續，換成天橋上的取景"}
+    post: []
+    overlay: null
+    status: proposed
+    model_hint: 角色鏡頭，I2V 加首尾幀
+
+  # ───────────── bridge（bar 21–24）─────────────
+  - id: s011
+    section: bridge
+    story_beat: bridge
+    span: {from: [21, 1], to: [23, 1]}
+    lyrics: [6]
+    place: "@footbridge"
+    shot_size: CU
+    angle: eye
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@kai"
+        placement: {x: center, y: middle, depth: mg}
+        size: 整張臉，額頭到下巴約畫面高 70%，雙眼在畫面高約 40%（從上緣量起），臉的中心在畫面水平正中
+        facing: to_camera
+        state: 站在天橋中段，表情由緊繃→放鬆；眼睛一直睜開
+    first_frame: >
+      @kai 的臉（額頭到下巴）占滿畫面中央，正面朝鏡頭。表情緊繃，眉頭皺起，嘴唇抿成一條線，眼睛睜開直視鏡頭，瞳孔深棕色；
+      雨水沿臉頰流下。背景是失焦的暖黃路燈光點。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: "@kai 的表情在 [22,1] 到 [22,3] 之間由緊繃變成放鬆：眉頭展開，嘴角放鬆；眼睛一直睜開，瞳孔顏色不變；其餘不動。"
+        realize: model
+    last_frame: >
+      與首幀相同的構圖：@kai 的臉占滿畫面中央，正面朝鏡頭。表情平靜，眉頭展開，嘴唇輕閉，嘴角略微上揚，眼睛睜開直視鏡頭，瞳孔仍是深棕色；
+      雨水仍沿臉頰流下。
+    beat_events:
+      - at: [22, 1]
+        sync: 歌詞 6「如果信送不到」之後的第一個重拍
+        event: "@kai 的眉頭開始展開"
+      - at: [22, 3]
+        event: "@kai 的嘴角放鬆，表情變成平靜"
+    transition_in: {type: whiteout, in_beats: 1, out_beats: 2}
+    post: []
+    overlay: null
+    status: proposed
+    model_hint: 特寫的表情變化屬細部動作：不用首尾幀模型，用 I2V 單首幀生成；末幀只當驗收基準，檢查瞳孔顏色沒有漂掉
+
+  - id: s012
+    section: bridge
+    story_beat: bridge
+    span: {from: [23, 1], to: [25, 1]}
+    place: "@footbridge"
+    shot_size: MS
+    angle: eye
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@kai"
+        placement: {x: center, y: middle, depth: mg}
+        size: 腰以上，頭頂在畫面高約 14%，身體中心在畫面水平正中，胸口在畫面高約 52%
+        facing: {start: to_camera, end: profile_right}
+        state: "[23,3] 起從正面朝鏡頭轉身，到 [24,3] 側面朝畫面右，看向天橋盡頭"
+      - ref: "@letter"
+        placement: {x: center, y: middle, depth: fg}
+        size: 長邊水平，約畫面寬 20%，中心在畫面水平正中、畫面高約 52%；雙手拿在胸前
+      - ref: "@letter_glow"
+        placement: {x: center, y: middle, depth: fg}
+        size: 圓形光暈，直徑約畫面高 22%，中心與 @letter 的中心重疊（畫面水平正中、畫面高約 52%）
+      - ref: "@boxbot"
+        placement: {x: center_right, y: lower, depth: mg}
+        size: 方箱高約畫面高 14%，在 @kai 右側約 0.8 m（畫面右側）
+        facing: three_quarter_right
+        state: 靜止，前面板朝畫面右前方，指示燈亮著
+    first_frame: >
+      @footbridge 的中段，鏡頭與胸口同高、距 @kai 約 2.5 m。@kai 腰以上，正面朝鏡頭，表情平靜，嘴唇輕閉，眼睛睜開直視鏡頭；
+      雙手在胸前拿著 @letter，@letter 的邊緣透出 @letter_glow，只照亮 @letter 周圍。
+      @boxbot 在 @kai 右側（畫面右側）的地面，前面板朝畫面右前方，指示燈穩定亮著。背景是暖黃路燈與夜色。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: "@kai 在 [23,3] 起轉身，從正面朝鏡頭轉到側面朝畫面右（朝天橋盡頭），在 [24,3] 完成；@letter 與 @letter_glow 跟著 @kai 的雙手轉動，@letter_glow 的亮度不變。"
+        realize: model
+    last_frame: >
+      @kai 側面朝畫面右，看向天橋盡頭（畫面右緣外），表情平靜，嘴唇輕閉，眼睛睜開看向前方；
+      @letter 與 @letter_glow 仍在 @kai 胸前、畫面水平正中、畫面高約 52%，@letter 的長邊水平，紅色封口條朝畫面右。
+      @boxbot 的前面板朝畫面右前方，指示燈亮著。
+    beat_events:
+      - at: [23, 3]
+        event: "@kai 轉身起步，雙肩先轉"
+      - at: [24, 3]
+        sync: 歌詞 6 結束後的第 2 拍
+        event: "@kai 轉身完成；@letter_glow 做 glow_pulse：亮度 4 幀內升到峰值，再用 8 幀回落"
+    transition_in: {type: cut}
+    post:
+      - {effect: glow_pulse, at: [24, 3], frames: 12}
+    overlay: null
+    status: proposed
+    read_as: "@letter_glow 是信封裡透出的暖色燈光，表示信裡的話有溫度；不是魔法，也不是爆炸"
+    model_hint: 角色鏡頭，I2V 加首尾幀；光暈由後製疊加，不交給模型
+
+  # ───────────── outro（bar 25–32）─────────────
+  - id: s013
+    section: outro
+    story_beat: outro
+    span: {from: [25, 1], to: [29, 1]}
+    lyrics: [7]
+    place: "@footbridge"
+    shot_size: INSERT
+    angle: eye
+    route: A
+    variation: medium
+    subjects:
+      - ref: "@letter"
+        placement: {x: center, y: middle, depth: fg}
+        size: 長邊水平，約畫面寬 35%，前端剛碰到投信口，中心在從左緣起算畫面寬約 62%、畫面高約 52% 處
+      - ref: "@letter_glow"
+        placement: {x: center, y: middle, depth: fg}
+        size: 圓形光暈，直徑約畫面高 40%，中心在畫面水平正中、畫面高約 52%
+      - ref: "@kai"
+        placement: {x: screen_right, y: middle, depth: fg}
+        size: 只拍到 char_right 手的拇指與食指，從畫面右緣伸入，捏住 @letter 的後端
+        facing: to_camera
+        state: 捏著 @letter，指尖貼在紅色封口條旁
+    first_frame: >
+      @footbridge 盡頭磚牆上的黃銅投信口位於畫面水平正中、畫面高約 52%，寬度約畫面寬 25%。
+      @letter 水平對準投信口，前端剛碰到投信口，@kai 的 char_right 手拇指與食指從畫面右緣伸入，捏住 @letter 的後端。
+      @letter_glow 的暖光在投信口周圍形成圓形光暈，中心在畫面水平正中。磚牆是濕的深紅色，沒有文字。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: "@kai 的手指把 @letter 往投信口推進；@letter 的前端在 [27,1] 進入投信口，到 [28,3] 完全進入、消失在投信口內；@letter_glow 的亮度隨 @letter 進入而逐漸降低，到 [28,3] 熄滅。"
+        realize: model+post
+    last_frame: >
+      @letter 已完全進入投信口，投信口內是暗的；只剩 @kai 的指尖停在投信口前，@letter_glow 已熄滅。
+      畫面中只有黃銅投信口與濕的磚牆。
+    beat_events:
+      - at: [27, 1]
+        sync: 歌詞 7 唱到「縫」
+        event: "@letter 的前端進入投信口"
+      - at: [28, 3]
+        event: "@letter 完全進入；@letter_glow 熄滅"
+    transition_in:
+      type: match_cut
+      note: "s012 末幀與本鏡首幀的 @letter_glow 都是畫面水平正中、畫面高約 52% 的暖色圓形光暈；光暈直徑由畫面高約 22% 放大到約 40%。對齊的是光暈的位置，不對齊大小"
+    post: []
+    overlay: null
+    status: proposed
+    questions:
+      - 信送進投信口之後，要不要讓觀眾看到投信口另一側有一隻手把信接走？（劇情題，等使用者決定）
+    model_hint: 物體入鏡、精準停位，用首尾幀模型；@letter_glow 熄滅由後製做
+
+  - id: s014
+    section: outro
+    story_beat: outro
+    span: {from: [29, 1], to: end}
+    lyrics: [8]
+    place: "@footbridge"
+    shot_size: MS
+    angle: eye
+    route: A
+    variation: large                     # 景別從 MS 變成 ELS
+    subjects:
+      - ref: "@kai"
+        placement: {x: center_left, y: middle, depth: mg}
+        size: 腰以上，頭頂在畫面高約 15%，身體中心在從左緣起算畫面寬約 38% 處，站在欄杆旁
+        facing: three_quarter_right
+        state: 站著不動；表情平靜，嘴角略微上揚，嘴唇輕閉，眼睛睜開看向天邊
+      - ref: "@boxbot"
+        placement: {x: center_right, y: lower, depth: mg}
+        size: 方箱高約畫面高 14%，在 @kai 右側約 0.8 m
+        facing: three_quarter_left
+        state: 靜止，前面板朝向 @kai，指示燈穩定亮著
+    first_frame: >
+      @footbridge 的天亮版本：雨停，天色是淡藍色，路燈與霓虹都已熄滅，鋼板地面只剩水光。鏡頭離 @kai 約 2.5 m、與胸口同高。
+      @kai 腰以上站在欄杆旁，身體朝畫面右前方，表情平靜，嘴角略微上揚，嘴唇輕閉，眼睛睜開看向天邊。
+      @boxbot 在 @kai 右側的地面，前面板朝向 @kai，指示燈穩定亮著。
+    motion:
+      camera: {move: pull_out, speed: fast, realize: model}
+      subject:
+        text: "@kai 與 @boxbot 保持不動；欄杆上的水珠偶爾滴落。"
+        realize: model
+    last_frame: >
+      鏡頭已拉遠到離 @kai 約 40 m、離地約 8 m，俯看整座 @footbridge 與周圍的城區；@kai 與 @boxbot 在畫面中心偏下，兩者合計高約畫面高 4%，
+      仍站在欄杆旁。天色是淡橘與淡藍，遠處街區沒有任何霓虹亮著。
+    beat_events:
+      - at: [31, 1]
+        sync: 歌詞 8 唱到「安靜」
+        event: 遠處最後一盞路燈熄滅（後製：亮度 4 幀內降到 0）
+    transition_in: {type: dissolve, beats: 2}
+    post: []
+    overlay:
+      zone: 畫面下緣置中，距下緣約畫面高 12%
+      content: 歌名字卡「霓虹信差」（後製疊加）
+    status: proposed
+    notes: 字卡只在後製疊；畫面內的天橋、牆面都沒有文字。
+    model_hint: large：首尾幀模型負責鏡頭拉遠；若中間畫面失真，拆成 MS 與 ELS 兩鏡

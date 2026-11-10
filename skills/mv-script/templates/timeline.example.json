@@ -1,0 +1,31 @@
+{
+ "meta": {"fps": 24, "duration_sec": 12.0, "n_frames": 288, "bpm": 120, "beats_per_bar": 4, "beat_sec": 0.5, "bar_sec": 2.0, "frame_rule": "frame = round(t * 24)"},
+ "beats": [
+  {"i": 0, "t": 1.5, "frame": 36, "bar": 0, "beat_in_bar": 4, "is_downbeat": false},
+  {"i": 1, "t": 2.0, "frame": 48, "bar": 1, "beat_in_bar": 1, "is_downbeat": true},
+  {"i": 2, "t": 2.5, "frame": 60, "bar": 1, "beat_in_bar": 2, "is_downbeat": false},
+  {"i": 3, "t": 3.0, "frame": 72, "bar": 1, "beat_in_bar": 3, "is_downbeat": false},
+  {"i": 4, "t": 3.5, "frame": 84, "bar": 1, "beat_in_bar": 4, "is_downbeat": false},
+  {"i": 5, "t": 4.0, "frame": 96, "bar": 2, "beat_in_bar": 1, "is_downbeat": true},
+  {"i": 6, "t": 4.5, "frame": 108, "bar": 2, "beat_in_bar": 2, "is_downbeat": false},
+  {"i": 7, "t": 5.0, "frame": 120, "bar": 2, "beat_in_bar": 3, "is_downbeat": false},
+  {"i": 8, "t": 5.5, "frame": 132, "bar": 2, "beat_in_bar": 4, "is_downbeat": false},
+  {"i": 9, "t": 6.0, "frame": 144, "bar": 3, "beat_in_bar": 1, "is_downbeat": true},
+  {"i": 10, "t": 6.5, "frame": 156, "bar": 3, "beat_in_bar": 2, "is_downbeat": false},
+  {"i": 11, "t": 7.0, "frame": 168, "bar": 3, "beat_in_bar": 3, "is_downbeat": false},
+  {"i": 12, "t": 7.5, "frame": 180, "bar": 3, "beat_in_bar": 4, "is_downbeat": false},
+  {"i": 13, "t": 8.0, "frame": 192, "bar": 4, "beat_in_bar": 1, "is_downbeat": true},
+  {"i": 14, "t": 8.5, "frame": 204, "bar": 4, "beat_in_bar": 2, "is_downbeat": false},
+  {"i": 15, "t": 9.0, "frame": 216, "bar": 4, "beat_in_bar": 3, "is_downbeat": false},
+  {"i": 16, "t": 9.5, "frame": 228, "bar": 4, "beat_in_bar": 4, "is_downbeat": false},
+  {"i": 17, "t": 10.0, "frame": 240, "bar": 5, "beat_in_bar": 1, "is_downbeat": true}
+ ],
+ "bars": [
+  {"bar": 1, "t_start": 2.0, "t_end": 4.0, "frame_start": 48, "frame_end": 96, "section": "intro", "lyric_ids": [1]},
+  {"bar": 2, "t_start": 4.0, "t_end": 6.0, "frame_start": 96, "frame_end": 144, "section": "intro", "lyric_ids": [1]},
+  {"bar": 3, "t_start": 6.0, "t_end": 8.0, "frame_start": 144, "frame_end": 192, "section": "intro", "lyric_ids": []},
+  {"bar": 4, "t_start": 8.0, "t_end": 10.0, "frame_start": 192, "frame_end": 240, "section": "intro", "lyric_ids": []}
+ ],
+ "sections": [{"idx": 0, "label": "intro", "t_start": 0.0, "t_end": 10.0, "frame_start": 0, "frame_end": 240, "bar_start": 0, "bar_end": 4, "n_bars": 4}],
+ "lyrics": [{"id": 1, "t_start": 2.0, "t_end": 5.5, "frame_start": 48, "frame_end": 132, "text": "範例歌詞第一行", "bar_start": 1, "bar_end": 2, "section": "intro"}]
+}

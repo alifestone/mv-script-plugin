@@ -1,0 +1,323 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "shots.yaml：鏡頭層",
+  "type": "object",
+  "required": [
+    "shots"
+  ],
+  "properties": {
+    "shots": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/shot"
+      }
+    }
+  },
+  "$defs": {
+    "position": {
+      "anyOf": [
+        {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number"
+          }
+        },
+        {
+          "enum": [
+            "end"
+          ]
+        }
+      ],
+      "description": "[小節, 拍]（拍可為小數）或 \"end\""
+    },
+    "subject": {
+      "type": "object",
+      "required": [
+        "ref",
+        "placement",
+        "size"
+      ],
+      "properties": {
+        "ref": {
+          "type": "string"
+        },
+        "placement": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "string"
+            },
+            "y": {
+              "type": "string"
+            },
+            "depth": {
+              "type": "string"
+            }
+          }
+        },
+        "size": {
+          "type": "string"
+        },
+        "facing": {
+          "description": "單一值，或依階段的 dict（例如 {entering: away, settled: to_camera}）",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "state": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "shot": {
+      "type": "object",
+      "required": [
+        "id",
+        "section",
+        "story_beat",
+        "span",
+        "place",
+        "shot_size",
+        "angle",
+        "route",
+        "variation",
+        "subjects",
+        "first_frame",
+        "motion",
+        "transition_in",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "section": {
+          "type": "string"
+        },
+        "story_beat": {
+          "type": "string"
+        },
+        "span": {
+          "type": "object",
+          "required": [
+            "from",
+            "to"
+          ],
+          "properties": {
+            "from": {
+              "$ref": "#/$defs/position"
+            },
+            "to": {
+              "$ref": "#/$defs/position"
+            }
+          }
+        },
+        "lyrics": {
+          "type": "array",
+          "items": {
+            "type": [
+              "integer",
+              "string"
+            ]
+          }
+        },
+        "place": {
+          "type": "string"
+        },
+        "shot_size": {
+          "type": "string"
+        },
+        "angle": {
+          "type": "string"
+        },
+        "route": {
+          "enum": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        "variation": {
+          "enum": [
+            "small",
+            "medium",
+            "large"
+          ]
+        },
+        "subjects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/subject"
+          }
+        },
+        "first_frame": {
+          "type": "string"
+        },
+        "last_frame": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "motion": {
+          "type": "object",
+          "required": [
+            "camera",
+            "subject"
+          ],
+          "properties": {
+            "camera": {
+              "type": "object",
+              "required": [
+                "move",
+                "speed",
+                "realize"
+              ],
+              "properties": {
+                "move": {
+                  "type": "string"
+                },
+                "speed": {
+                  "type": "string"
+                },
+                "realize": {
+                  "enum": [
+                    "model",
+                    "post",
+                    "model+post",
+                    "none"
+                  ]
+                },
+                "note": {
+                  "type": "string"
+                }
+              }
+            },
+            "subject": {
+              "type": "object",
+              "required": [
+                "realize"
+              ],
+              "properties": {
+                "text": {
+                  "type": "string"
+                },
+                "realize": {
+                  "enum": [
+                    "model",
+                    "post",
+                    "model+post",
+                    "none"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "beat_events": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "object",
+            "required": [
+              "at",
+              "event"
+            ],
+            "properties": {
+              "at": {
+                "$ref": "#/$defs/position"
+              },
+              "sync": {
+                "type": "string"
+              },
+              "event": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "transition_in": {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "frames": {
+              "type": "number"
+            },
+            "beats": {
+              "type": "number"
+            },
+            "in_beats": {
+              "type": "number"
+            },
+            "out_beats": {
+              "type": "number"
+            },
+            "note": {
+              "type": "string"
+            }
+          }
+        },
+        "post": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "string",
+              "object"
+            ]
+          }
+        },
+        "overlay": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "notes": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "proposed",
+            "confirmed"
+          ]
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

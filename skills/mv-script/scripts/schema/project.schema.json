@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "project.yaml：每支影片開頭由使用者決定的參數",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "title"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer"
+    },
+    "title": {
+      "type": "string"
+    },
+    "timeline": {
+      "type": "string",
+      "description": "timeline.json 的路徑，相對於 plan 目錄的上一層；可被 --timeline 蓋掉"
+    },
+    "lyrics": {
+      "type": "string"
+    },
+    "character_refs": {
+      "type": "string"
+    },
+    "style_bible": {
+      "type": "string"
+    },
+    "params": {
+      "type": "object",
+      "properties": {
+        "narrative_type": {
+          "enum": [
+            "story",
+            "performance",
+            "mixed",
+            "abstract"
+          ]
+        },
+        "lyric_mapping": {
+          "enum": [
+            "section",
+            "line",
+            "literal"
+          ]
+        },
+        "dance_shots": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "lip_sync": {
+          "type": "boolean"
+        },
+        "second_characters": {
+          "type": "object",
+          "properties": {
+            "allowed": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "extras_count_as_character": {
+              "type": "boolean"
+            }
+          }
+        },
+        "props_in_hand": {
+          "enum": [
+            "allowed",
+            "brief_only",
+            "forbidden"
+          ]
+        },
+        "scene_limit": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "max_shot_bars": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "brand_text": {
+          "type": "string"
+        },
+        "brand_appears_if": {
+          "type": "string"
+        }
+      }
+    },
+    "decisions": {
+      "type": "object",
+      "properties": {
+        "banned_motifs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

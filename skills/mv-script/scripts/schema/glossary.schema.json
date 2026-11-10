@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "glossary.yaml：詞彙 vocab 與實體 entities",
+  "type": "object",
+  "required": [
+    "vocab",
+    "entities"
+  ],
+  "properties": {
+    "vocab": {
+      "type": "object",
+      "required": [
+        "shot_size",
+        "angle",
+        "camera_move",
+        "camera_speed",
+        "variation",
+        "transition",
+        "screen_x",
+        "screen_y",
+        "depth"
+      ],
+      "properties": {
+        "shot_size": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "angle": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "camera_move": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "camera_speed": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "variation": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "transition": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "post_effect": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "screen_x": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "screen_y": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "depth": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "facing": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "entities": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/entity"
+      }
+    }
+  },
+  "$defs": {
+    "entity": {
+      "type": "object",
+      "required": [
+        "kind",
+        "name",
+        "status",
+        "definition"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "character",
+            "place",
+            "object",
+            "vfx",
+            "state"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "proposed",
+            "confirmed"
+          ]
+        },
+        "definition": {
+          "type": "string"
+        },
+        "look": {
+          "type": "object"
+        },
+        "refs": {
+          "type": [
+            "array",
+            "string"
+          ]
+        },
+        "not_this": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "aliases_forbidden": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "no_face": {
+          "type": "boolean",
+          "description": "true＝這個角色沒有臉（例如機器人），P3 不檢查它的臉部狀態"
+        }
+      }
+    }
+  }
+}

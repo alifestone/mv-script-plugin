@@ -1,0 +1,49 @@
+vocab:
+  shot_size:
+    CU: 特寫
+    MS: 中景
+    LS: 遠景
+  angle:
+    eye: 平視
+  camera_move:
+    static: 不動
+  camera_speed:
+    slow: 慢
+  variation:
+    small: 小
+    medium: 中
+    large: 大
+  transition:
+    cut: 直切
+  screen_x:
+  - center
+  screen_y:
+  - middle
+  depth:
+  - mg
+  facing:
+  - to_camera
+  - away
+entities:
+  hero:
+    kind: character
+    name: 艾拉
+    status: confirmed
+    definition: 主角
+    look:
+      outfit: 白衣
+  room:
+    kind: place
+    name: 小房間
+    status: confirmed
+    definition: 只有一面牆的房間
+    look:
+      wall: 灰牆
+  bot:
+    kind: character
+    name: 小機
+    status: confirmed
+    definition: 無臉機器人
+    look:
+      shape: 球
+    no_face: true

@@ -1,0 +1,7 @@
+schema_version: 1
+title: Fixture MV
+timeline: analysis/timeline.json
+params:
+  max_shot_bars: 2
+decisions:
+  banned_motifs: []

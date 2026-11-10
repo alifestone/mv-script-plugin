@@ -1,0 +1,16 @@
+{
+  "name": "mv-script-plugin",
+  "owner": {
+    "name": "alifestone"
+  },
+  "metadata": {
+    "description": "mv-script: structured MV scripting workflow for Claude Code"
+  },
+  "plugins": [
+    {
+      "name": "mv-script",
+      "source": "./",
+      "description": "Structured music-video / animated-short scripting from a song timeline: glossary with @id entities, story, per-shot storyboard, lint, a clean-context ambiguity critic, and Markdown rendering. Docs in Traditional Chinese. 從歌曲時間軸寫 MV 結構化劇本。"
+    }
+  ]
+}

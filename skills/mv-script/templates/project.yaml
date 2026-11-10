@@ -1,0 +1,39 @@
+# 每支影片開頭由使用者決定的參數。lint 依這些值檢查 story 與 shots。
+# 流程第 1 步：用 AskUserQuestion 一題一題問使用者，把答案填進 params；不要替使用者選。
+schema_version: 1
+title: TODO 影片名稱
+timeline: analysis/timeline.json     # 合約見 references/timeline-contract.md
+lyrics: audio/lyrics.srt
+character_refs: refs/                # 角色參考圖資料夾
+style_bible: docs/style_bible.md     # 全片鏡頭寫完後才重寫
+
+params:
+  narrative_type: story              # story（有劇情）| performance（演唱／演出）| mixed | abstract（抽象影像）
+  lyric_mapping: section             # section（段落層對應）| line（每句歌詞都有畫面）| literal（字面照畫）
+  dance_shots: 0                     # 舞蹈英雄鏡頭數；0＝不跳舞（整數）
+  lip_sync: false                    # true＝要對嘴；false＝不對嘴
+  second_characters:                 # 允許的第二角色種類
+    allowed: [non_human, designed_human]   # 可選：non_human | designed_human | none（寫成 []）
+    extras_count_as_character: false       # true＝路人算第二角色；false＝不算
+  props_in_hand: allowed             # allowed | brief_only（只短暫出現）| forbidden
+  scene_limit: null                  # null＝不設限；或整數（場景數上限）
+  max_shot_bars: 2                   # 一般鏡頭長度上限（小節，整數）
+  brand_text: post_only              # post_only（畫面內不出現任何文字，字標與字卡只在後製疊）| in_scene（允許場景內有文字）
+  brand_appears_if: story_relevant   # always | story_relevant（劇情相關才出現）| never
+
+# 授權模式（流程第 5 步的分流依據；見 SKILL.md「兩種授權模式」）
+authorization: per_section           # per_section（逐段問使用者）| autonomous（使用者授權 Claude 自行完成）
+
+# 線上文件（沒有就刪掉整段；詳見 references/doc-sync.md）
+docs:
+  online_doc_id: null                # 線上文件 id
+  body_node_id: null                 # 文件內容區的 body node id
+  output_md: docs/mv_plan.md         # 沒有線上文件時的輸出
+
+# 使用者確認過的方向。依日期分段，每列「key: 值」加中文註解。
+# Claude 代決的項目要在註解寫「Claude 代決」與理由；延後審查的寫明重審關卡。
+# 寫法見 references/decisions-log.md。
+decisions:
+  # YYYY-MM-DD 概念
+  concept: TODO                      # 使用者從 3 個方向挑的概念
+  banned_motifs: []                  # 禁用母題；lint 會掃全文（R2）

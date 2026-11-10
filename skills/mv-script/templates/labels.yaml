@@ -1,0 +1,28 @@
+# render_plan.py 的欄位名稱對照（--labels 預設讀 <plan>/labels.yaml；沒有這個檔就直接顯示原 key）。
+# 把這份複製到 plan 目錄，依這支影片 glossary 裡用到的欄位（look 的子欄位、variants、extras…）逐一補上中文。
+fields:
+  style: 風格
+  role: 角色設定
+  notes: 備註
+  refs: 參考圖
+  shape: 形狀
+  size: 大小
+  color: 顏色
+  light: 光
+  material: 材質
+  location: 位置
+  state: 狀態
+  position: 位置
+  # 依這支影片的名詞表繼續補
+
+# 動作由誰完成（流程通用，程式內建預設值；要改才寫）
+realize:
+  model: 影片模型生成
+  post: 後製
+  model+post: 影片模型＋後製
+  none: 不動
+
+# Markdown 檔頭說明（可選）；沒寫就用 render_plan.py 內建的通用說明
+texts:
+  generated_note: 由 plan 目錄的 YAML 以 render_plan.py 產生，不要手改；修改請改 YAML 再重新產生。
+  proposed_note: 「待確認」是 Claude 的提案，還沒經過使用者確認。

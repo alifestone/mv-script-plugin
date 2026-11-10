@@ -1,0 +1,10 @@
+beats:
+- id: intro
+  section: intro
+  bars:
+  - 0
+  - 2
+  story: '@hero 面對牆上的影像與畫像，停下腳步。'
+  emotion: 安靜
+  lyric_link: 測試
+  status: confirmed

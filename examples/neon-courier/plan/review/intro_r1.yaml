@@ -1,0 +1,38 @@
+# Intro（s001–s003）第 1 輪歧義審稿（plan-critic，2026-03-03）
+# status：open＝等回答；resolved＝已處理（resolution 寫怎麼處理）
+# decided_by：claude＝Claude 代決（精度題）；user＝使用者回答（劇情與設定題）
+round: intro_r1
+issues:
+  - id: Q01
+    where: shots.s001.beat_events[0].event
+    category: 2
+    quote: 亮度略微提高
+    problem: 「略微」沒有數字，也沒有說幾幀內完成、幾幀回落，執行的人必須自己決定
+    question: 粉紅霓虹色塊的 glow_pulse，亮度抬升到幾倍？抬升與回落各用幾幀？
+    options: ["亮度 1 幀內抬升到約 1.5 倍，再用 3 幀回落，共 4 幀", "亮度 2 幀內抬升到約 2 倍，再用 4 幀回落"]
+    severity: low
+    status: resolved
+    decided_by: claude
+    resolution: "a：亮度 1 幀內抬升到約 1.5 倍，3 幀回落，共 4 幀。精度題，Claude 代決；理由：s001 的光只是一個鼓點的提示，抬升太高會蓋過後面 s002 之後的亮度層次。已同步 post 與 decisions.glow_pulse_frames。"
+
+  - id: Q02
+    where: glossary.letter.look.surface
+    category: 10
+    quote: 信封上沒有收件資訊
+    problem: 「沒有收件資訊」可以讀成完全空白，也可以讀成有一塊空的收件人色塊；兩種畫出來不一樣
+    question: "@letter 的表面要完全空白，還是畫一塊沒有文字的收件人色塊？"
+    options: ["兩面都完全空白", "正面有一塊沒有文字的淺色矩形，當作收件人欄"]
+    severity: medium
+    status: resolved
+    decided_by: user
+    resolution: "a：兩面都完全空白（使用者 2026-03-03 回答）。劇情上就是沒有收件人。glossary.letter.look.surface 與 not_this 已更新，decisions.letter_surface: blank。"
+
+  - id: Q03
+    where: shots.s003.motion.subject.text
+    category: 5
+    quote: 從畫面右緣外滑入
+    problem: 只寫了起點（畫面右緣外）與停點（@kai 右前方），沒有寫滑行的距離；[3,3] 到 [4,2] 只有 3 拍，距離不同，速度就不同
+    question: "@boxbot 從畫面右緣外滑到停下前，實際在地面上移動多遠？"
+    options: ["約 3 m（起點在畫面右緣外約 2 m）", "約 1.5 m（起點緊貼畫面右緣外）"]
+    severity: medium
+    status: open

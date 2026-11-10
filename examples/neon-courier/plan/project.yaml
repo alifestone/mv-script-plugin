@@ -1,0 +1,36 @@
+# 虛構範例「霓虹信差」：本外掛附的完整範例，歌曲、角色、劇情都是為了示範格式而編的。
+# 欄位說明見 skills/mv-script/references/schema.md；空白骨架見 skills/mv-script/templates/project.yaml。
+schema_version: 1
+title: 霓虹信差（虛構範例）
+timeline: analysis/timeline.json     # 約 32 小節、BPM 120、4/4；合約見 references/timeline-contract.md
+
+params:
+  narrative_type: story              # 有劇情
+  lyric_mapping: section             # 段落層對應：每段歌詞對一段劇情，不逐句畫
+  dance_shots: 0                     # 不跳舞
+  lip_sync: false                    # 不對嘴
+  second_characters:                 # 第二角色只能是非人類
+    allowed: [non_human]
+    extras_count_as_character: false
+  props_in_hand: allowed             # 手持道具不限（@letter 要拿在手上）
+  scene_limit: 2                     # 場景數上限：@alley 與 @footbridge
+  max_shot_bars: 4                   # 這首歌慢、段落長，鏡頭上限放寬到 4 小節（預設是 2）
+  brand_text: post_only              # 畫面內不出現任何文字；字卡只在後製疊
+  brand_appears_if: story_relevant
+
+authorization: per_section           # 逐段問使用者
+
+docs:
+  online_doc_id: null                # 範例沒有線上文件
+  body_node_id: null
+  output_md: docs/mv_plan.md
+
+decisions:
+  # 2026-03-02 概念（使用者從 3 個方向挑）
+  concept: 雨夜送信                  # 另外兩個方向：末班車的乘客、霓虹熄滅前的競速
+  ending: gentle_dawn                # 溫柔收尾：信送出，天亮，不留伏筆
+  partner: faceless_box              # 夥伴是沒有臉的方箱，只用指示燈表達狀態
+  banned_motifs: [幽靈]              # 使用者否決：不要出現幽靈、鬼魂一類的設定；lint 掃全文（R2）
+  # 2026-03-03 intro 審稿（intro_r1）
+  letter_surface: blank              # Q02，使用者決定：信封兩面都是空白，不寫收件人
+  glow_pulse_frames: 4               # Q01，Claude 代決（精度題）：亮度 1 幀升到約 1.5 倍，3 幀回落，共 4 幀

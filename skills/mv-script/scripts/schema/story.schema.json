@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "story.yaml：敘事層",
+  "type": "object",
+  "required": [
+    "beats"
+  ],
+  "properties": {
+    "logline": {
+      "type": "string"
+    },
+    "theme": {
+      "type": "string"
+    },
+    "tone": {
+      "type": "string"
+    },
+    "ending": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "proposed",
+        "confirmed"
+      ]
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "beats": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "section",
+          "bars",
+          "story",
+          "emotion",
+          "lyric_link",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "section": {
+            "type": "string"
+          },
+          "bars": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "integer"
+            }
+          },
+          "places": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "story": {
+            "type": "string"
+          },
+          "emotion": {
+            "type": "string"
+          },
+          "lyric_link": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "proposed",
+              "confirmed"
+            ]
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

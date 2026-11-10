@@ -1,0 +1,190 @@
+# 名詞表：story.yaml 與 shots.yaml 只能用這裡的 id（實體寫 @id，詞彙直接寫值）。
+# vocab 沿用 skills/mv-script/templates/glossary.yaml，是跨影片共用的詞彙；
+# entities 是這支虛構範例的 6 個實體：1 個角色、1 個沒有臉的夥伴角色、2 個場景、1 個物件、1 個特效。
+# refs 的路徑是示意，範例不附參考圖。
+
+
+vocab:
+  shot_size:
+    ECU: 大特寫，只拍眼睛或臉的一部分
+    CU: 特寫，整張臉，下緣到下巴
+    MCU: 近景，胸口以上
+    MS: 中景，腰以上
+    MLS: 中遠景，膝以上
+    FS: 全身，頭頂到腳底都在畫面內
+    LS: 遠景，人物高度不到畫面高的 1/2
+    ELS: 大遠景，人物高度不到畫面高的 1/8，或畫面中沒有人物的環境全景
+    INSERT: 物件或特效的特寫插入鏡，畫面中沒有角色的臉
+
+  angle:
+    eye: 平視，鏡頭與主體眼睛同高
+    low: 仰角，鏡頭低於主體往上拍
+    high: 俯角，鏡頭高於主體往下拍
+    top: 正上方垂直往下
+    dutch: 鏡頭沿光軸傾斜 10–20°
+
+  camera_move:
+    static: 鏡頭完全不動
+    push_in: 鏡頭往前推近
+    pull_out: 鏡頭往後拉遠
+    pan_left: 鏡頭原地向畫面左轉
+    pan_right: 鏡頭原地向畫面右轉
+    tilt_up: 鏡頭原地往上仰
+    tilt_down: 鏡頭原地往下俯
+    track: 鏡頭平移跟著主體
+    crane_up: 鏡頭垂直升高
+    crane_down: 鏡頭垂直下降
+    orbit_left: 鏡頭繞主體往畫面左繞
+    orbit_right: 鏡頭繞主體往畫面右繞
+
+  camera_speed:
+    slow: 整鏡內畫面變化不超過 10%（推拉：主體大小變化 ≤10%）
+    medium: 整鏡內畫面變化 10–30%
+    fast: 整鏡內畫面變化超過 30%
+
+  variation:        # 首幀到末幀的變化量；決定影片生成要不要用末幀（借自 ViMax）
+    small: 首尾幀幾乎相同（只有呼吸、眨眼、輕微浮動）；只用首幀生成，不寫末幀也可以
+    medium: 主體狀態或位置明顯改變，但構圖不變；必須寫 last_frame，用首尾幀生成
+    large: 構圖、景別或主體大幅改變；必須寫 last_frame，考慮拆成兩鏡
+
+  transition:       # 寫在下一鏡的 transition_in
+    cut: 直切。在 span.from 的拍點直接換成新畫面，沒有任何效果
+    cut_on_action: 直切，前一鏡結尾與這一鏡開頭是同一個動作的前後兩段
+    match_cut: 直切，前一鏡結尾與這一鏡開頭有同一個形狀在畫面同一位置
+    flash_white: "前一鏡最後 N 幀變成純白 #ffffff（參數 frames），新畫面從純白後的第一幀直接出現，不淡入"
+    whiteout: 前一鏡亮度在 in_beats 拍內逐漸升到純白，新畫面再從純白在 out_beats 拍內淡出
+    fade_from_black: "從純黑 #000000 在 N 拍（或 frames 幀）內淡入成畫面"
+    fade_to_black: 畫面在 N 拍內淡出成純黑，下一鏡從純黑開始
+    dissolve: 前後兩個畫面交疊 N 拍，前一鏡淡出的同時新畫面淡入
+
+  post_effect:      # 寫在 post 或 beat_events；不換鏡頭
+    flash_frames: 畫面整個變純白 N 幀後回到原畫面（不換鏡）
+    glow_pulse: 指定的發光物亮度短暫抬升再回落，畫面其他部分不變；不是全白
+    shake: 整個畫面震動 N 幀，位移不超過畫面寬 1%
+    chromatic: RGB 色差分離 N 幀
+    speed_ramp: 影片速度變化（參數 from/to 倍速）
+    freeze: 畫面停在某一幀不動
+
+  screen_x: [screen_left, center_left, center, center_right, screen_right]   # 觀眾看到的左右，五等分
+  screen_y: [top, upper, middle, lower, bottom]
+  depth: [fg, mg, bg]          # 前景、中景、背景
+  facing: [to_camera, three_quarter_left, three_quarter_right, profile_left, profile_right, away]
+    # three_quarter_left = 臉朝向畫面左前方；profile_left = 正側面、鼻尖指向畫面左；away = 背對鏡頭
+
+
+entities:
+  # ── 角色（kind: character）────────────────────────
+  kai:
+    kind: character
+    name: 阿凱
+    status: confirmed
+    definition: 在雨夜送信的夜班信差，帶著一封沒有收件人的信，要找到該放的地方。
+    refs: [refs/kai/01_full_front.png, refs/kai/02_side_right.png, refs/kai/03_back.png]
+    role: 全片唯一的人類角色
+    look:
+      shape: 身高約 175 cm，偏瘦；黑色短髮，被雨淋濕後貼在額頭；瞳孔深棕色 "#3b2a20"
+      outfit: 橘色防水外套 "#e8742a"，深灰色長褲與高筒靴
+      color: 外套橘 "#e8742a"、郵差包深灰 "#4a4d55"、反光條黃 "#f2d230"
+      light: 不發光；黃色反光條只反射環境光，不自己亮
+      asymmetry: 黃色反光條只在 char_left 袖口（寬約 3 cm，繞袖口一圈）；單肩郵差包只背在 char_right 肩，包帶斜過胸前到 char_left 腰側
+    aliases_forbidden: [快遞員, 送信人, 男孩, 主角]
+    not_this:
+      - 不是穿制服的郵局職員：外套沒有任何徽章、標誌或文字
+      - 不是騎車的外送員：全片都用雙腳移動，沒有車
+    notes: 禁止左右翻轉畫面，否則反光條與郵差包的左右會錯。
+    questions: []
+
+  boxbot:
+    kind: character
+    name: 小箱
+    status: confirmed
+    no_face: true                        # 沒有臉：lint F3 不檢查表情、嘴、眼
+    definition: 跟著 @kai 的貨運小方箱，用輪子行進，只用指示燈表達狀態。
+    refs: [refs/boxbot/01_front.png, refs/boxbot/02_side.png]
+    role: 陪 @kai 走完全程的同行者，不說話
+    look:
+      shape: 邊長約 40 cm 的方箱，底部有兩顆直徑約 15 cm 的黑色橡膠輪；高度約到 @kai 膝蓋（@kai 身高的 1/4）
+      front: 前面板是平整的單色面，沒有眼睛、嘴或任何類似臉的圖案；正中央只有一個直徑約 8 cm 的圓形指示燈
+      color: 箱體啞光青綠 "#2f8f86"；指示燈琥珀色 "#ffb000"
+      light: 指示燈穩定亮著，不閃；亮度只照亮前面板周圍約 20 cm 的地面
+      asymmetry: 以前面板為準，char_left 側面有一塊約 10 cm 的凹痕與銀色膠帶補丁，char_right 側面是平的
+    aliases_forbidden: [機器人, 小機器, 夥伴]
+    not_this:
+      - 不是有臉的角色：沒有眼睛、嘴、表情
+      - 不是會飛的：全程貼地，靠輪子行進
+      - 箱體上沒有文字、數字、logo
+    notes: 方向以前面板（有指示燈的那一面）為準；行進時前面板朝行進方向。
+    questions: []
+
+  # ── 場景（kind: place）────────────────────────────
+  alley:
+    kind: place
+    name: 霓虹後巷
+    status: confirmed
+    definition: 雨夜的舊商店後巷，全片前三段（intro、verse、chorus）的主要場景。
+    refs: [refs/entities/alley/wide.png, refs/entities/alley/low_angle.png]
+    look:
+      layout: 寬約 3 m、長約 30 m 的直巷，兩側是約 3 層樓高的舊磚牆；右側中段有一塊寬約 4 m 的屋簷
+      floor: 濕的深灰色柏油 "#2a2d33"，有水窪，反射兩側的霓虹光
+      light: 兩側牆面各有數塊發光色塊（粉紅 "#e83e8c" 與青色 "#2ad4e8"，都是抽象的矩形色塊）；巷口有一盞暖黃路燈 "#ffcc66"
+      weather: 持續小雨，雨絲細而直
+      palette: 深灰藍的暗部加上粉紅與青色的點光
+    variants:
+      dark: chorus 後半，色塊依序熄滅，只剩巷口那盞暖黃路燈
+    extras: 沒有路人，也沒有車；巷子裡只有 @kai 與 @boxbot。
+    not_this:
+      - 招牌與色塊上沒有任何文字、數字、logo 或類似文字的符號
+      - 不是白天，也不是乾的地面
+
+  footbridge:
+    kind: place
+    name: 舊天橋
+    status: proposed
+    definition: 巷子盡頭的舊鋼架人行天橋，盡頭牆上有投信口；bridge 與 outro 的場景。
+    refs: [refs/entities/footbridge/wide.png, refs/entities/footbridge/slot.png]
+    look:
+      layout: 寬約 2.5 m、長約 20 m 的鋼架天橋，欄杆高約 1.1 m；盡頭是一面磚牆
+      slot: 磚牆上離地約 1.2 m 嵌著一道黃銅投信口，寬約 25 cm、高約 4 cm，表面沒有文字
+      floor: 防滑鋼板，濕的，深灰 "#3a3d44"
+      light: 天橋兩端各一盞暖黃路燈 "#ffcc66"；橋下的車道只看得到遠處微弱的車燈光點
+      palette: 暖黃路燈加上深灰藍的夜色；天亮後轉成淡藍 "#a9c7e8" 與淡橘
+    variants:
+      dawn: outro 的天亮版本：雨停，天色淡藍帶一點淡橘，路燈已熄滅，鋼板上只剩水光
+    not_this:
+      - 投信口上沒有文字、門牌或數字
+      - 不是車站天橋：沒有售票機、站牌或人群
+
+  # ── 物件（kind: object）───────────────────────────
+  letter:
+    kind: object
+    name: 無名信
+    status: confirmed
+    definition: 全片的核心物件：沒有收件人的信，由 @kai 帶著，最後送進投信口。
+    refs: [refs/entities/letter/front.png, refs/entities/letter/in_hand.png]
+    look:
+      shape: 長約 22 cm、寬約 11 cm 的長方形信封
+      color: 米白色 "#f2e6c9"；封口處一道寬約 1 cm 的紅色紙膠帶 "#c0392b"，貼在右端
+      surface: 正面與背面都是空白，沒有收件人、地址、郵票或任何文字
+      light: 不發光（透出的暖光是另一個特效 @letter_glow）
+    aliases_forbidden: [書信, 郵件]
+    not_this:
+      - 不是有地址的信：表面完全空白
+      - 不是包裹或文件夾：厚度不到 5 mm
+
+  # ── 特效（kind: vfx）──────────────────────────────
+  letter_glow:
+    kind: vfx
+    name: 信封暖光
+    status: proposed
+    definition: bridge 之後從 @letter 邊緣透出的暖色光暈，表示信裡的話有溫度。
+    refs: [refs/entities/letter_glow/frames.png]
+    look:
+      color: 琥珀色 "#ffb347"，中心較亮，邊緣漸淡
+      shape: 圓形柔光，直徑約為 @letter 長邊的 2 倍；中心跟著 @letter 的中心
+      motion: glow_pulse 時亮度 4 幀內升到峰值，再用 8 幀回落；平時亮度穩定
+      scope: 只照亮 @letter 周圍約 30 cm，不照亮整個場景
+      realize: 後製疊加（post）
+    aliases_forbidden: [光球, 光環]
+    not_this:
+      - 不是爆炸或閃光：亮度變化平緩
+      - 不是魔法光效：沒有星點、粒子或光線放射

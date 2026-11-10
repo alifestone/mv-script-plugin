@@ -1,0 +1,44 @@
+# 鏡頭層：每一鏡的時間、主體、首幀、運動、末幀、轉場、拍點事件、後製。
+# 欄位說明見 references/schema.md；詞彙值見 glossary.yaml 的 vocab。
+# span.from / span.to 是 [小節, 拍]；to 不含在本鏡內。
+# motion.*.realize：model＝由影片模型生成；post＝後製合成；model+post＝兩者都有；none＝不動。
+
+shots:
+  - id: s001
+    section: intro
+    story_beat: intro
+    span: {from: [0, 0], to: [1, 1]}
+    lyrics: [1]
+    place: "@room"
+    shot_size: MS                        # vocab.shot_size
+    angle: eye                           # vocab.angle
+    route: A                             # A 一般 I2V｜B 指定動作｜C 靜態圖＋視差
+    variation: small                     # small 可不寫末幀；medium／large 必須寫 last_frame
+    subjects:
+      - ref: "@hero"
+        placement: {x: center, y: middle, depth: mg}
+        size: TODO 腰以上，頭頂在畫面高約 10%（百分比從上緣量起）
+        facing: to_camera                # vocab.facing；移動或轉向時改寫成 dict，見 references/format.md
+        state: TODO 站立不動；表情平靜，嘴巴閉著，眼睛睜開直視鏡頭
+    first_frame: >
+      TODO 一張靜止畫面：@hero 站在 @room 的正中央，面向鏡頭，雙手垂在身側；
+      表情平靜，嘴巴閉著，眼睛睜開直視鏡頭。首幀只寫此刻看起來怎樣，動作留給 motion。
+    motion:
+      camera: {move: static, speed: slow, realize: none}
+      subject:
+        text: TODO 誰在動、往哪動、多快；沒有動作就寫「@hero 只有呼吸，其餘不動」
+        realize: model
+    last_frame: null                     # variation 為 small 時可以是 null
+    beat_events:                         # 逐拍發生的事，一拍一筆；沒有就寫 []
+      - at: [0, 4]                       # [小節, 拍]，可寫小數；必須在本鏡內（不含 span.to）
+        sync: TODO 對應的歌詞或聲音（可省略）
+        event: TODO 這一拍發生的事
+    transition_in: {type: fade_from_black, frames: 16}   # vocab.transition；每一鏡都要有
+    post: []                             # 後製清單，例如 {effect: glow_pulse, at: [1, 1], frames: 4}
+    overlay: null                        # 字標或字卡：{zone: 位置, content: 內容}
+    status: proposed
+    # 選填欄位（需要時取消註解）：
+    # read_as: TODO 觀眾應該把這個畫面看成什麼（例如「定格在半空，不是飄浮」）
+    # model_hint: TODO 建議路線，見 references/feasibility.md
+    # questions: [TODO 還沒回答的問題]
+    # notes: TODO 備註（分工、連續性、下一鏡的接點）

@@ -1,0 +1,111 @@
+# 名詞表：story.yaml 與 shots.yaml 只能用這裡的 id（實體寫 @id，詞彙直接寫值）。
+# vocab 是跨影片共用的詞彙，可以增補，不要隨意刪改；entities 是這支影片的角色、場景、物件、特效、狀態。
+# 這份只放一個角色、一個場景當範例；欄位說明見 references/schema.md。
+
+vocab:
+  shot_size:
+    ECU: 大特寫，只拍眼睛或臉的一部分
+    CU: 特寫，整張臉，下緣到下巴
+    MCU: 近景，胸口以上
+    MS: 中景，腰以上
+    MLS: 中遠景，膝以上
+    FS: 全身，頭頂到腳底都在畫面內
+    LS: 遠景，人物高度不到畫面高的 1/2
+    ELS: 大遠景，人物高度不到畫面高的 1/8，或畫面中沒有人物的環境全景
+    INSERT: 物件或特效的特寫插入鏡，畫面中沒有角色的臉
+
+  angle:
+    eye: 平視，鏡頭與主體眼睛同高
+    low: 仰角，鏡頭低於主體往上拍
+    high: 俯角，鏡頭高於主體往下拍
+    top: 正上方垂直往下
+    dutch: 鏡頭沿光軸傾斜 10–20°
+
+  camera_move:
+    static: 鏡頭完全不動
+    push_in: 鏡頭往前推近
+    pull_out: 鏡頭往後拉遠
+    pan_left: 鏡頭原地向畫面左轉
+    pan_right: 鏡頭原地向畫面右轉
+    tilt_up: 鏡頭原地往上仰
+    tilt_down: 鏡頭原地往下俯
+    track: 鏡頭平移跟著主體
+    crane_up: 鏡頭垂直升高
+    crane_down: 鏡頭垂直下降
+    orbit_left: 鏡頭繞主體往畫面左繞
+    orbit_right: 鏡頭繞主體往畫面右繞
+
+  camera_speed:
+    slow: 整鏡內畫面變化不超過 10%（推拉：主體大小變化 ≤10%）
+    medium: 整鏡內畫面變化 10–30%
+    fast: 整鏡內畫面變化超過 30%
+
+  variation:        # 首幀到末幀的變化量；決定影片生成要不要用末幀（借自 ViMax）
+    small: 首尾幀幾乎相同（只有呼吸、眨眼、輕微浮動）；只用首幀生成，不寫末幀也可以
+    medium: 主體狀態或位置明顯改變，但構圖不變；必須寫 last_frame，用首尾幀生成
+    large: 構圖、景別或主體大幅改變；必須寫 last_frame，考慮拆成兩鏡
+
+  transition:       # 寫在下一鏡的 transition_in
+    cut: 直切。在 span.from 的拍點直接換成新畫面，沒有任何效果
+    cut_on_action: 直切，前一鏡結尾與這一鏡開頭是同一個動作的前後兩段
+    match_cut: 直切，前一鏡結尾與這一鏡開頭有同一個形狀在畫面同一位置
+    flash_white: "前一鏡最後 N 幀變成純白 #ffffff（參數 frames），新畫面從純白後的第一幀直接出現，不淡入"
+    whiteout: 前一鏡亮度在 in_beats 拍內逐漸升到純白，新畫面再從純白在 out_beats 拍內淡出
+    fade_from_black: "從純黑 #000000 在 N 拍（或 frames 幀）內淡入成畫面"
+    fade_to_black: 畫面在 N 拍內淡出成純黑，下一鏡從純黑開始
+    dissolve: 前後兩個畫面交疊 N 拍，前一鏡淡出的同時新畫面淡入
+
+  post_effect:      # 寫在 post 或 beat_events；不換鏡頭
+    flash_frames: 畫面整個變純白 N 幀後回到原畫面（不換鏡）
+    glow_pulse: 指定的發光物亮度短暫抬升再回落，畫面其他部分不變；不是全白
+    shake: 整個畫面震動 N 幀，位移不超過畫面寬 1%
+    chromatic: RGB 色差分離 N 幀
+    speed_ramp: 影片速度變化（參數 from/to 倍速）
+    freeze: 畫面停在某一幀不動
+
+  screen_x: [screen_left, center_left, center, center_right, screen_right]   # 觀眾看到的左右，五等分
+  screen_y: [top, upper, middle, lower, bottom]
+  depth: [fg, mg, bg]          # 前景、中景、背景
+  facing: [to_camera, three_quarter_left, three_quarter_right, profile_left, profile_right, away]
+    # three_quarter_left = 臉朝向畫面左前方；profile_left = 正側面、鼻尖指向畫面左；away = 背對鏡頭
+
+
+entities:
+  # ── 角色（kind: character）────────────────────────
+  hero:                                  # id：小寫英文＋底線，寫進劇本時是 @hero
+    kind: character                      # character | place | object | vfx | state
+    name: TODO 角色名稱                  # 顯示用名稱；劇本裡不准寫這個名稱，一律寫 @id（R3 會警告）
+    status: proposed                     # proposed（Claude 提案）| confirmed（使用者確認）
+    definition: TODO 一句話：這個角色是誰、在劇情裡做什麼
+    refs: [refs/01_full_front.png, refs/02_side.png]   # 參考圖；非角色實體也要有 refs（P3 做出固定參考圖後填回）
+    role: TODO 劇情身分
+    look:                                # 外觀要寫到可以直接畫出來；子欄位可自訂
+      shape: TODO 體型與輪廓
+      color: "TODO 主色與色碼，例如 #aabbcc"
+      light: TODO 是否發光；不發光就寫「不發光」
+      asymmetry: TODO 非對稱外觀，例如「飾品在 char_right 大腿」；左右一律用 char_left／char_right
+    aliases_forbidden: []                # 這個東西不准用的叫法，例如 [主角, 女孩]；出現在 story 或 shots 會 FAIL（R2）
+    not_this:                            # 最可能被誤解成什麼；每條一個誤解
+      - TODO 不是 X
+    # no_face: true                      # 沒有臉的角色（機器人、剪影）才加；lint F3 就不檢查表情、嘴、眼
+    notes: TODO 其他規則（例如禁止左右翻轉畫面）
+    questions: []                        # 還沒回答的問題；lint 會列出
+
+  # ── 場景（kind: place）────────────────────────────
+  room:
+    kind: place
+    name: TODO 場景名稱
+    status: proposed
+    definition: TODO 一句話：這是哪裡、什麼時候用
+    refs: [refs/entities/room/wide.png]
+    look:
+      layout: TODO 空間配置與尺寸（公尺）
+      floor: TODO 地面材質與色碼
+      light: TODO 光從哪裡來；有哪些光源
+      palette: TODO 主色調
+    variants:                            # 同一個場景的不同狀態版本（可刪）
+      day: TODO 白天版本的差異
+      night: TODO 夜晚版本的差異
+    extras: TODO 路人或群眾的規則（可刪）
+    not_this:
+      - TODO 不是 X

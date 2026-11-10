@@ -1,0 +1,23 @@
+# 歧義審稿檔：plan/review/<段落>_r<輪>.yaml。由 plan-critic 產出 issues，Claude 與使用者處理後填 status／resolution。
+# status：open＝等回答；resolved＝已處理（resolution 寫怎麼處理）。格式說明見 references/decisions-log.md。
+round: intro_r1
+issues:
+  - id: Q01
+    where: shots.s001.motion.subject.text       # 檔案.項目.欄位
+    category: 2                                 # plan-critic 檢查清單編號
+    quote: 原文中有問題的那幾個字（逐字）
+    problem: 一句話說明為什麼會被讀錯或必須猜
+    question: 具體到可以直接回答的問題
+    options: ["候選答案 a", "候選答案 b"]        # 可省略
+    severity: medium                            # high | medium | low
+    status: open
+  - id: Q02
+    where: shots.s001.first_frame
+    category: 4
+    quote: 原文
+    problem: 說明
+    question: 問題
+    severity: low
+    status: resolved
+    decided_by: claude                          # claude（Claude 代決）| user（使用者回答）
+    resolution: "a：具體決定內容與一句理由。"

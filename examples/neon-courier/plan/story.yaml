@@ -1,0 +1,65 @@
+# 敘事層：每段落發生什麼。只寫劇情與情緒，不寫景別、構圖、顏色等畫面細節（那些寫在 shots.yaml）。
+# 角色、場景、物件一律用 @id（定義在 glossary.yaml）。
+
+logline: >
+  夜班信差 @kai 帶著一封沒有收件人的 @letter，在城裡的霓虹熄滅以前，找到一個可以把話放進去的地方。
+theme: 把說不出口的話送出去
+tone: 潮濕、溫暖、帶著趕時間的急迫
+ending: 溫柔收尾：@letter 送進投信口，天亮，沒有後續伏筆
+status: proposed
+
+beats:                         # bars 必須等於 timeline 該段的 [bar_start, bar_end]
+  - id: intro
+    section: intro
+    bars: [0, 4]
+    places: ["@alley"]
+    story: >
+      雨夜，@kai 站在 @alley 的屋簷下，手裡拿著一封沒有收件人的 @letter。
+      @boxbot 從巷口滑進來，停在 @kai 身邊，兩個一起望向巷子的深處。
+    emotion: 安靜，迷惘
+    lyric_link: 「雨還沒停，城市先亮了」：雨夜與霓虹是這段的背景；歌詞第一句唱完時，霓虹亮度提高。
+    status: confirmed
+
+  - id: verse
+    section: verse
+    bars: [5, 12]
+    places: ["@alley"]
+    story: >
+      @kai 帶著 @boxbot 沿 @alley 往深處走，一路低頭看 @letter：沒有收件人，只有一條紅色封口。
+      走到巷子後段，@kai 把 @letter 收進包裡，腳步變得堅定。
+    emotion: 猶豫，漸漸有了方向
+    lyric_link: 「背包裡有一封沒署名的信」「地圖上的路，只有我自己會走」：@letter 與獨自找路。
+    status: proposed
+
+  - id: chorus
+    section: chorus
+    bars: [13, 20]
+    places: ["@alley", "@footbridge"]
+    story: >
+      城裡的霓虹會在午夜依序熄滅。@kai 帶著 @boxbot 在雨裡奔跑，穿過 @alley，衝上 @footbridge，
+      要趕在最後一盞燈熄滅以前到達盡頭。
+    emotion: 急迫，興奮
+    lyric_link: 「跑吧，趕在燈熄滅以前」「每一盞霓虹都替我指路」：霓虹一盞盞熄滅，催著 @kai 往前。
+    status: proposed
+
+  - id: bridge
+    section: bridge
+    bars: [21, 24]
+    places: ["@footbridge"]
+    story: >
+      @kai 在 @footbridge 中段停下來，低頭看 @letter，猶豫要不要真的送出去。
+      @letter 的邊緣透出暖色的 @letter_glow，@boxbot 的指示燈照著前方；@kai 的神情放鬆，轉身面向天橋的盡頭。
+    emotion: 停頓，下定決心
+    lyric_link: 「如果信送不到，會不會也是答案」：@kai 不再追問收件人是誰。
+    status: proposed
+
+  - id: outro
+    section: outro
+    bars: [25, 32]
+    places: ["@footbridge"]
+    story: >
+      @kai 走到 @footbridge 的盡頭，把 @letter 推進牆上的投信口。霓虹全部熄滅，雨停了，天色轉成淡藍。
+      @kai 與 @boxbot 站在 @footbridge 上看天亮。
+    emotion: 釋然，安靜
+    lyric_link: 「天亮之前，把話放進那道縫」「雨停了，城市慢慢安靜」：送信與天亮。
+    status: proposed
