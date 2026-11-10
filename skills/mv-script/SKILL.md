@@ -91,7 +91,7 @@ python3 $S/render_plan.py --plan plan [--timeline FILE] [--labels FILE] [--out F
    處理完給使用者看**決策表**（題號、決定、理由），不給問題清單。
 5. **重跑 lint**。
 6. **render**，同步線上文件，只替換變動的區塊（[references/doc-sync.md](references/doc-sync.md)）。
-7. **使用者確認後 commit 加 push**。commit 訊息寫段落與原因。沒確認不 commit。
+7. **commit 加 push**。commit 訊息寫段落與原因。劇情是否要先經使用者確認，依 `plot_review`（見下方「劇情審查時機」）：預設 `at_rough_cut` 不等確認，render 與同步後直接 commit、寫下一段；`per_section` 才要使用者確認後 commit。
 
 ### 6. 全片寫完之後
 
@@ -105,10 +105,21 @@ python3 $S/render_plan.py --plan plan [--timeline FILE] [--labels FILE] [--out F
 
 | 模式 | 做法 |
 | --- | --- |
-| `per_section`（逐段問） | 每段寫完，劇情與設定題問使用者，確認後才 commit。預設 |
-| `autonomous`（使用者授權自行完成） | 劇情題由 Claude 代決，在 `decisions` 標「Claude 代決」並寫理由；延後的審查集中到下一個關卡（例如 `late_plot_review: later`，寫明重審關卡）；鏡頭維持 `status: proposed`；每段仍 lint、critic、commit |
+| `per_section`（逐段問） | 每段寫完，劇情與設定的選擇題問使用者。預設 |
+| `autonomous`（使用者授權自行完成） | 劇情題由 Claude 代決，在 `decisions` 標「Claude 代決」並寫理由；鏡頭維持 `status: proposed`，留到劇情審查關卡（見下）一起檢驗；每段仍 lint、critic、commit |
 
 授權模式下仍然要寫下每個決定。不要因為不用問，就讓決定變成隱含的。
+
+## 劇情審查時機
+
+「問選擇題」（授權模式）和「審寫好的劇情」是兩件事。後者在流程第 1 步問，記在 `project.yaml` 的 `plot_review`。
+
+| 值 | 做法 |
+| --- | --- |
+| `at_rough_cut`（預設） | 使用者不逐段確認劇情，也不在關鍵幀前另外審。render、同步線上文件後直接 commit、寫下一段。劇情在粗剪關卡（原專案的 G3）對照 `mv_plan.md` 和影片一起檢驗；劇情問題（S）退回 P2 改劇本，再重做受影響的鏡頭 |
+| `per_section` | 每段 render 後給使用者確認，確認後 commit；確認的鏡頭改 `status: confirmed` |
+
+`at_rough_cut` 下 `status: proposed` 的意思是「劇情還沒在粗剪中檢驗過」，不是「等使用者確認」；不要在關鍵幀前提醒使用者審劇情。
 
 ## 下游發現做不到
 

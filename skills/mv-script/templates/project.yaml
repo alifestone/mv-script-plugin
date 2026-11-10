@@ -24,6 +24,9 @@ params:
 # 授權模式（流程第 5 步的分流依據；見 SKILL.md「兩種授權模式」）
 authorization: per_section           # per_section（逐段問使用者）| autonomous（使用者授權 Claude 自行完成）
 
+# 劇情審查時機（見 SKILL.md「劇情審查時機」）
+plot_review: at_rough_cut            # at_rough_cut（不逐段確認，粗剪時和影片一起檢驗）| per_section（每段 render 後使用者確認）
+
 # 線上文件（沒有就刪掉整段；詳見 references/doc-sync.md）
 docs:
   online_doc_id: null                # 線上文件 id

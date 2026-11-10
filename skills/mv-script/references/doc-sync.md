@@ -71,7 +71,7 @@ docs:
 
 | 時機 | 同步 |
 | --- | --- |
-| 一段 shots 寫完、lint 與審稿處理完、render 後 | 是（給使用者確認用） |
-| 使用者確認、commit 之前 | 把 `confirmed` 狀態同步 |
+| 一段 shots 寫完、lint 與審稿處理完、render 後 | 是（`at_rough_cut` 同步後直接 commit；`per_section` 給使用者確認用） |
+| `per_section` 使用者確認、commit 之前 | 把 `confirmed` 狀態同步 |
 | 自行完成模式 | 每段 commit，但線上文件可在全片結束時一次同步（需告知使用者） |
 | 只改了 YAML 的註解或空白 | 否 |

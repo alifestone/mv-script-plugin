@@ -21,7 +21,7 @@ decisions:
   chase_route: alley_to_footbridge     # 奔跑路線從巷子到天橋
   # 2026-03-10 Bridge～Outro（Claude 代決：使用者授權自行完成，以下皆可改）
   letter_glow_meaning: warm_light      # Claude 代決：暖光表示信裡的話有溫度，與霓虹的冷色做出差異
-  late_plot_review: later              # 重審關卡：做這些段落的關鍵幀之前（參考圖之後、試作之前）
+  late_plot_review: at_rough_cut       # 重審關卡：粗剪時和影片一起檢驗（plot_review: at_rough_cut）
 ```
 
 ### 使用者決定
@@ -41,8 +41,8 @@ decisions:
 
 | 要記的事 | 範例 |
 | --- | --- |
-| 哪些項目延後 | `late_plot_review: later` |
-| 重審關卡 | 「做這些段落的關鍵幀之前再審」「G1 animatic 時一起看」 |
+| 哪些項目延後 | `late_plot_review: at_rough_cut` |
+| 重審關卡 | 預設「粗剪時和影片一起檢驗」；`plot_review: per_section` 時可寫「做這些段落的關鍵幀之前再審」 |
 | 影響範圍 | 哪些 shot id、哪些實體 |
 
 重審時，把使用者的答案寫成新的日期段落；被改掉的 Claude 代決不要刪，加註解「改為 …（日期）」。
@@ -113,4 +113,4 @@ issues:
 ### 與 lint 的關係
 
 - `lint_plan.py` 會把 `status: open` 的題列為 OPEN（不影響結束碼）。
-- 一段落結束時，review 檔不該有 `open`。要延後的題保持 `open`，並在 decisions 寫明重審關卡（例如 `late_plot_review: later`）。
+- 一段落結束時，review 檔不該有 `open`。要延後的題保持 `open`，並在 decisions 寫明重審關卡（例如 `late_plot_review: at_rough_cut`）。

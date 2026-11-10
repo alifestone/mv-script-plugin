@@ -7,7 +7,7 @@ P2（本外掛）的產物是 `plan/*.yaml`。這份文件說明下游各階段�
 | --- | --- | --- |
 | P3 | 角色與物件、場景的參考圖，LoRA | `glossary.yaml`：`look`、`refs`、`not_this`；style bible |
 | G0 | 樣張與 LoRA 審查 | 同上 |
-| P4 | 8 秒端到端試作 | `shots.yaml`：選 3–4 個 `confirmed` 的鏡頭 |
+| P4 | 8 秒端到端試作 | `shots.yaml`：選 3–4 個已通過 lint 與 critic 的鏡頭（`per_section` 時要 `confirmed`） |
 | P5 | 鏡頭清單與 animatic | 全部欄位；組 prompt（見下） |
 | G1 | animatic 審查 | 節奏與切點，見 [g1-rubric.md](g1-rubric.md) |
 | P6–P9 | 關鍵幀、影片、修補、後製 | `first_frame`、`last_frame`、`variation`、`realize`、`beat_events`、`transition_in`、`post`、`overlay` |
@@ -25,12 +25,12 @@ P2（本外掛）的產物是 `plan/*.yaml`。這份文件說明下游各階段�
 
 ## P4：試作
 
-- 從 `confirmed` 的鏡頭選 3–4 鏡，要涵蓋不同路線：
+- 從已通過 lint 與 critic 的鏡頭（`per_section` 時是 `confirmed` 的鏡頭）選 3–4 鏡，要涵蓋不同路線：
   - 路線 C（視差）。
   - 路線 A 的特寫。
   - 路線 A 有非角色主體動作且含後製效果的鏡頭。
   - 若有舞蹈鏡頭（`dance_shots` > 0）再加 1 鏡。
-- P2 要保證被選中的鏡頭 `status: confirmed`、`first_frame`、`last_frame`、`motion`、`model_hint` 齊全。
+- P2 要保證被選中的鏡頭（`per_section` 時 `status: confirmed`）`first_frame`、`last_frame`、`motion`、`model_hint` 齊全。
 - 試作結果決定主模型、路線與參數；結果寫進試作報告，也決定哪些 `model_hint` 規則要改。
 - 試作發現劇本問題（九條 P4 教訓）：改 `shots.yaml`，status 退回 `proposed`，重跑 lint 與 critic。
 

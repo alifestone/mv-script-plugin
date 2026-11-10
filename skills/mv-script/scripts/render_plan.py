@@ -23,7 +23,7 @@ REALIZE_ZH = {"model": "影片模型生成", "post": "後製", "model+post": "�
 
 
 GENERATED_NOTE = "由 plan 目錄的 YAML 以 render_plan.py 產生，不要手改；修改請改 YAML 再重新產生。"
-PROPOSED_NOTE = "「待確認」是 Claude 的提案，還沒經過使用者確認。"
+PROPOSED_NOTE = "「待確認」是 Claude 的提案，劇情還沒在粗剪中檢驗過（plot_review: per_section 時表示還沒經過使用者確認）。"
 
 
 def load_labels(path):

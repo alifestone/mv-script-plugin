@@ -16,7 +16,7 @@ lint 與 critic 只能保證「讀得懂」，生成模型的能力是另一回�
 4. 該鏡與受影響的鄰鏡 `status` 退回 `proposed`。
 5. 重跑 `lint_plan.py`（FAIL 必須 0），再跑 plan-critic（範圍限於改過的鏡頭與前後各一鏡）。
 6. 新的決定寫進 `decisions`（日期分段，註明起因是哪個下游發現）。
-7. render、同步線上文件、使用者確認。
+7. render、同步線上文件；`plot_review: per_section` 時再請使用者確認（`at_rough_cut` 不用，意思有變的改動照第 3 步問使用者）。
 
 ## P3 的教訓（參考圖與關鍵幀）
 
