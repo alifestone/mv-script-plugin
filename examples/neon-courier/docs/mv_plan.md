@@ -1,7 +1,7 @@
 # 霓虹信差（虛構範例） 概念與劇本
 
 > 由 plan 目錄的 YAML 以 render_plan.py 產生，不要手改；修改請改 YAML 再重新產生。
-> 「待確認」是 Claude 的提案，還沒經過使用者確認。
+> 「待確認」是 Claude 的提案，劇情還沒在粗剪中檢驗過（plot_review 為 per_section 時表示還沒經過使用者確認）。
 
 ## 參數與已確認決定
 
