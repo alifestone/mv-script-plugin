@@ -1,5 +1,7 @@
 # mv-script
 
+**English summary.** A Claude Code plugin for writing structured music-video (or animated short) scripts from a song timeline. It walks through project parameters, concept directions, a glossary of `@id` entities, a story layer, and a per-shot storyboard (static first frame, motion, last frame, transitions, beat events). It ships a schema-plus-semantic lint, a clean-context ambiguity critic agent, Markdown rendering, templates, and a complete fictional example in `examples/neon-courier/`. Documentation is in Traditional Chinese.
+
 Claude Code plugin。從歌曲時間軸寫 MV／動畫短片的結構化劇本：名詞表、敘事、逐鏡分鏡；附 lint、歧義審稿與渲染。
 
 ## 這是什麼
