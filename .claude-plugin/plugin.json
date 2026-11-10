@@ -1,8 +1,8 @@
 {
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "mv-script",
-  "version": "0.1.0",
-  "description": "Structured music-video / animated-short scripting from a song timeline: glossary with @id entities, story, per-shot storyboard, lint, a clean-context ambiguity critic, and Markdown rendering. Docs in Traditional Chinese. 從歌曲時間軸寫 MV 結構化劇本。",
+  "version": "0.1.1",
+  "description": "Structured music-video / animated-short scripting from a song timeline: glossary with @id entities, story, per-shot storyboard, checks (done by Claude from a manual checklist in this directory edition), a clean-context ambiguity critic, and Markdown rendering. Docs in Traditional Chinese. 從歌曲時間軸寫 MV 結構化劇本。",
   "author": {
     "name": "alifestone"
   },

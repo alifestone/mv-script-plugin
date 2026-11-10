@@ -30,16 +30,14 @@ description: 從歌曲時間軸（timeline.json）寫 MV 或動畫短片的結�
 - 精確數量標明「約」或改後製。
 - 劇情與設定問使用者，精度題由 Claude 代決並記錄理由。
 
-## 腳本
+## 檢查與渲染（目錄版：沒有腳本）
 
-```bash
-S=${CLAUDE_PLUGIN_ROOT}/skills/mv-script/scripts
-python3 $S/lint_plan.py --plan plan [--timeline FILE] [--profile legacy|full] [--quiet]
-python3 $S/render_plan.py --plan plan [--timeline FILE] [--labels FILE] [--out FILE]
-```
+這是目錄版，不附 `lint_plan.py`、`render_plan.py`。檢查與渲染由 Claude 照
+[references/manual-checks.md](references/manual-checks.md) **逐條**做，輸出格式與代碼和完整版相同。
+其他參考文件寫「跑 lint」「lint 到 FAIL 0」「render」時，一律照 manual-checks.md 做。
 
-依賴 python3 與 PyYAML；有 jsonschema 就用，沒有就用內建驗證器。`--plan` 必填。
-新專案用 `--profile full`（預設）。lint 代碼與規則見 [references/schema.md](references/schema.md)。
+結構規則在 `${CLAUDE_PLUGIN_ROOT}/skills/mv-script/scripts/schema/`，詞表在 `${CLAUDE_PLUGIN_ROOT}/skills/mv-script/scripts/words/zh-TW.yaml`。
+要用程式檢查（可重複、不漏條），請安裝 GitHub 完整版：`/plugin marketplace add alifestone/mv-script-plugin`。
 
 ## 流程
 
@@ -47,7 +45,7 @@ python3 $S/render_plan.py --plan plan [--timeline FILE] [--labels FILE] [--out F
 
 確認 `timeline.json` 符合合約（[references/timeline-contract.md](references/timeline-contract.md)）。
 不符就請使用者先處理音樂分析；本外掛不分析音樂。
-先用 `lint_plan.py` 讀得進去，再往下。
+先照 manual-checks.md 讀得進去（時間位置能換算成秒數），再往下。
 
 ### 1. 參數
 
